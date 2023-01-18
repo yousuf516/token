@@ -22,4 +22,8 @@ actor {
 
     };
 
+    public query func getSymbol() : async Text {
+        return symbol;
+    };
+
 }

@@ -1,19 +1,19 @@
 {
   "canisters": {
-    "token": {
-      "main": "src/token/main.mo",
+    "token_backend": {
+      "main": "src/token_backend/main.mo",
       "type": "motoko"
     },
-    "token_assets": {
+    "token_frontend": {
       "dependencies": [
-        "token"
+        "token_backend"
       ],
       "frontend": {
-        "entrypoint": "src/token_assets/src/index.html"
+        "entrypoint": "src/token_frontend/src/index.html"
       },
       "source": [
-        "src/token_assets/assets",
-        "dist/token_assets/"
+        "src/token_frontend/assets",
+        "dist/token_frontend/"
       ],
       "type": "assets"
     }
@@ -22,13 +22,6 @@
     "build": {
       "args": "",
       "packtool": ""
-    }
-  },
-  "dfx": "0.12.1",
-  "networks": {
-    "local": {
-      "bind": "127.0.0.1:8000",
-      "type": "ephemeral"
     }
   },
   "version": 1
