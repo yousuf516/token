@@ -1,6 +1,7 @@
 import React from "react";
 import { Principal } from "@dfinity/principal";
-import { token_backend } from "../../../declarations/token_backend";
+import { AuthClient } from '@dfinity/auth-client';
+import { canisterId, createActor } from "../../../declarations/token_backend";
 
 function Transfer() {
   
@@ -18,12 +19,21 @@ function Transfer() {
         setText("Check Account ID");
         setDisabled(false);
       };
-    }, 15000);
+    }, 20000);
 
     const recipient = Principal.fromText(recipientId);
     const amountToTransfer = Number(amount);
 
-    let result = await token_backend.transfer(recipient, amountToTransfer);
+    const authClient = await AuthClient.create();
+    const identity = await authClient.getIdentity();
+
+    const authenticatedCanister = createActor(canisterId, {
+      agentOptions: {
+        identity,
+      },
+    });
+
+    let result = await authenticatedCanister.transfer(recipient, amountToTransfer);
 
     setTimeout(function () {
       setText("Transfer");
